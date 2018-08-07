@@ -1,0 +1,11 @@
+{
+  "name": "hibp",
+  "version": "1.0.0",
+  "description": "A lightweight tool to check email addresses and their plus aliases against haveibeenpwned.com",
+  "main": "hibp.js",
+  "scripts": {
+    "start": "node hibp.js"
+  },
+  "author": "ppseprus",
+  "license": "MIT"
+}
