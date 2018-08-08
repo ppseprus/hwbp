@@ -1,0 +1,27 @@
+[
+	{
+		"address": "me@family.com",
+		"aliases": [
+			"amazon",
+			"dropbox"
+		]
+	},
+	{
+		"address": "mom@family.com"
+	},
+	{
+		"address": "dad@family.com"
+	},
+	{
+		"address": "grandma@family.com"
+	},
+	{
+		"address": "grandpa@family.com"
+	},
+	{
+		"address": "our-company@something.com",
+		"aliases": [
+			"some-service"
+		]
+	}
+]
