@@ -1,4 +1,4 @@
-# Have WE Been Pwned?
+# Have We Been Pwned?
 
 A Node.js tool to check email addresses and their plus aliases against haveibeenpwned.com.
 
