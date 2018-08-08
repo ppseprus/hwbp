@@ -18,7 +18,7 @@ So, I thought I would keep an eye out for grandma's account too. And it is much 
 
 ## How to use
 
-1. Add your accounts to the accounts.json (see the _example.json_ for help)
+1. Add your accounts to the _accounts.json_ (see the _example.json_ for help)
 2. Run `npm start`
 
 **If and when something happens, keep calm and notify your family members you watch out for! Tell them what to do!**
@@ -27,7 +27,7 @@ How simple is that?
 
 And the output is made pretty by [chalk](https://github.com/chalk/chalk). Look!
 
-![The tool in action](/images/hwbp.gif)
+![The tool in action](https://raw.githubusercontent.com/ppseprus/hwbp/master/images/hwbp.gif?raw=true)
 
 ## Disclaimer
 
