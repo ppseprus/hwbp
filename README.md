@@ -19,7 +19,7 @@ So, I thought I would keep an eye out for grandma's account too. And it is much 
 ## How to use
 
 1. Add your accounts to the _accounts.json_ (see the _example.json_ for help)
-2. Run `npm start`
+2. Run `npm start` or `node hwbp --verbose` for _verbose_ mode
 
 **If and when something happens, keep calm and notify your family members you watch out for! Tell them what to do!**
 
