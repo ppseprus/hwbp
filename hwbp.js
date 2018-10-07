@@ -1,8 +1,15 @@
 const chalk = require('chalk');
 const request = require('request-promise');
 
+const VERBOSE = '--verbose';
 const RATE_LIMIT = 1500; // haveibeenpwned.com API rate limit
 const CURRENT_YEAR = new Date().getFullYear().toString();
+
+const isVerbose = process.argv.reduce((isVerbose, arg) => {
+	isVerbose = isVerbose || arg === VERBOSE;
+	return isVerbose;
+
+}, false);
 
 let okayAccounts = 0;
 
@@ -36,9 +43,13 @@ function rateLimit(limit) {
 
 function listBreaches(response) {
 	return response
-		.filter((breach) => breach.AddedDate.startsWith(CURRENT_YEAR))
+		.filter((breach) => breach.AddedDate.startsWith(CURRENT_YEAR) || isVerbose)
 		.reduce((list, breach) => {
-			listItem = chalk.bgRed.white(` ${breach.Title} `) + ' ' + chalk.red(`(${breach.BreachDate})`);
+			let listItem = `${breach.Title} (${breach.BreachDate})`;
+
+			if (breach.BreachDate.startsWith(CURRENT_YEAR)) {
+				listItem = chalk.bgRed.white.bold(listItem);
+			}
 
 		if (list === '') {
 			return listItem;
@@ -71,6 +82,9 @@ async function hwbp(requests) {
 			})
 			.catch((error) => {
 				if (error.statusCode === 404) {
+					if (isVerbose) {
+						console.log(`${chalk.blue(account)}: ${chalk.green('Ok')}`);
+					}
 					okayAccounts++;
 					return;
 				}
@@ -100,7 +114,9 @@ async function hwbp(requests) {
 		await rateLimit(limit);
 	}
 
+	if (!isVerbose) {
 	console.log(chalk.blue(`No recent breaches for ${okayAccounts} accounts and aliases`));
+}
 }
 
 hwbp(mapRequests(require('./accounts')));
