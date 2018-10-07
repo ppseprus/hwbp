@@ -4,6 +4,8 @@ const request = require('request-promise');
 const RATE_LIMIT = 1500; // haveibeenpwned.com API rate limit
 const CURRENT_YEAR = new Date().getFullYear().toString();
 
+let okayAccounts = 0;
+
 function plusAlias(account, alias) {
 	if (!alias) {
 		return account;
@@ -33,12 +35,10 @@ function rateLimit(limit) {
 }
 
 function listBreaches(response) {
-	return response.reduce((list, breach) => {
-		let listItem = `${breach.Title} (${breach.BreachDate})`;
-
-		if (breach.BreachDate.startsWith(CURRENT_YEAR)) {
-			listItem = chalk.bgRed.white.bold(listItem);
-		}
+	return response
+		.filter((breach) => breach.AddedDate.startsWith(CURRENT_YEAR))
+		.reduce((list, breach) => {
+			listItem = chalk.bgRed.white(` ${breach.Title} `) + ' ' + chalk.red(`(${breach.BreachDate})`);
 
 		if (list === '') {
 			return listItem;
@@ -64,11 +64,14 @@ async function hwbp(requests) {
 				json: true
 			})
 			.then((response) => {
-				console.log(chalk.red(`${account}: ${listBreaches(response)}`));
+				let breaches = listBreaches(response);
+				if (breaches) {
+					console.log(chalk.red(`${account}: ${breaches}`));
+				}
 			})
 			.catch((error) => {
 				if (error.statusCode === 404) {
-					console.log(`${chalk.blue(account)}: ${chalk.green('Ok')}`);
+					okayAccounts++;
 					return;
 				}
 
@@ -96,6 +99,8 @@ async function hwbp(requests) {
 		
 		await rateLimit(limit);
 	}
+
+	console.log(chalk.blue(`No recent breaches for ${okayAccounts} accounts and aliases`));
 }
 
 hwbp(mapRequests(require('./accounts')));
