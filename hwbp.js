@@ -5,6 +5,8 @@ const VERBOSE = '--verbose';
 const RATE_LIMIT = 1500; // haveibeenpwned.com API rate limit
 const CURRENT_YEAR = new Date().getFullYear().toString();
 
+const USER_AGENT = 'ppseprus/hwbp/1.0.0';
+
 const isVerbose = process.argv.reduce((isVerbose, arg) => {
 	isVerbose = isVerbose || arg === VERBOSE;
 	return isVerbose;
@@ -51,13 +53,13 @@ function listBreaches(response) {
 				listItem = chalk.bgRed.white.bold(listItem);
 			}
 
-		if (list === '') {
-			return listItem;
-		}
+			if (list === '') {
+				return listItem;
+			}
 
-		return `${list}, ${listItem}`;
+			return `${list}, ${listItem}`;
 
-	}, '');
+		}, '');
 }
 
 async function hwbp(requests) {
@@ -70,7 +72,7 @@ async function hwbp(requests) {
 		await request({
 				url: `https://haveibeenpwned.com/api/v2/breachedaccount/${account}`,
 				headers: {
-					'User-Agent': 'request'
+					'User-Agent': USER_AGENT
 				},
 				json: true
 			})
@@ -115,8 +117,8 @@ async function hwbp(requests) {
 	}
 
 	if (!isVerbose) {
-	console.log(chalk.blue(`No recent breaches for ${okayAccounts} accounts and aliases`));
-}
+		console.log(chalk.blue(`No recent breaches for ${okayAccounts} accounts and aliases`));
+	}
 }
 
-hwbp(mapRequests(require('./accounts')));
+hwbp(mapRequests(require('../hwbpaccounts/accounts')));
