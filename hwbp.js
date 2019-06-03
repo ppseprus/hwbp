@@ -70,9 +70,10 @@ async function hwbp(requests) {
 		let limit = RATE_LIMIT;
 		
 		await request({
-				url: `https://haveibeenpwned.com/api/v2/breachedaccount/${account}`,
+				url: `https://haveibeenpwned.com/api/breachedaccount/${account}`,
 				headers: {
-					'User-Agent': USER_AGENT
+					'Accept': 'application/vnd.haveibeenpwned.v2+json',
+					'User-Agent': USER_AGENT,
 				},
 				json: true
 			})
