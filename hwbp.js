@@ -5,7 +5,7 @@ const VERBOSE = '--verbose';
 const RATE_LIMIT = 1500; // haveibeenpwned.com API rate limit
 const CURRENT_YEAR = new Date().getFullYear().toString();
 
-const USER_AGENT = 'ppseprus/hwbp/1.0.0';
+const USER_AGENT = 'com.seprus.hwbp-1_0_0';
 
 const isVerbose = process.argv.reduce((isVerbose, arg) => {
 	isVerbose = isVerbose || arg === VERBOSE;
